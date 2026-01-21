@@ -1,7 +1,33 @@
+# Existing
 tags
 test.sh
 .luarc.json
 nvim
-
 spell/
 lazy-lock.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Vim/Neovim
+*.swp
+*.swo
+*.swn
+*~
+Session.vim
+.netrwhist
