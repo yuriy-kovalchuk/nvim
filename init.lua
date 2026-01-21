@@ -605,8 +605,10 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
+        terraformls = {},
+        tflint = {},
+        clangd = {},
+        gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -945,6 +947,13 @@ require('lazy').setup({
     },
   },
 })
-
+-- Ensure .tf files are recognized as terraform
+vim.filetype.add {
+  extension = {
+    tf = 'terraform',
+    tfvars = 'terraform',
+    hcl = 'hcl',
+  },
+}
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
