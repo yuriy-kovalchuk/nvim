@@ -1,6 +1,6 @@
 # Neovim Configuration (Custom Kickstart)
 
-This is a professional-grade Neovim configuration built on top of [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim). It features a modern, aesthetic UI and a highly optimized workflow for Go, Python, and generic development.
+This is a professional-grade Neovim configuration built on top of [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim). It is meticulously tuned for a **modern IntelliJ (New UI) aesthetic** while providing a high-performance workflow for Go, Python, and generic development.
 
 ## Installation
 
@@ -10,73 +10,65 @@ git clone https://github.com/yuriy-kovalchuk/nvim.git "${XDG_CONFIG_HOME:-$HOME/
 
 ## Core Features
 
-- **Modern UI**: Powered by [Noice.nvim](https://github.com/folke/noice.nvim) (floating command palette, nice notifications).
-- **Aesthetic Statusline**: Using [Lualine](https://github.com/nvim-lualine/lualine.nvim) with the `tokyonight` theme.
-- **Fuzzy Finding**: Advanced searching with [Telescope](https://github.com/nvim-telescope/telescope.nvim).
-- **Fast Navigation**: 
-  - [Harpoon2](https://github.com/ThePrimeagen/harpoon/tree/harpoon2) for pinning files.
-  - Floating [Neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim) for browsing.
-  - [Oil.nvim](https://github.com/stevearc/oil.nvim) for editing the filesystem as a buffer.
-- **Session Management**: [Persistence.nvim](https://github.com/folke/persistence.nvim) to save and restore work automatically.
-- **Debugging**: Full DAP support for **Go** (delve) and **Python** (debugpy).
-- **LSP & Formatting**: Auto-configured Language Servers and Formatters via [Mason](https://github.com/williamboman/mason.nvim).
+- **JetBrains Aesthetic**: Powered by [jb.nvim](https://github.com/nickkadutskyi/jb.nvim) with rounded LSP borders and semantic highlighting.
+- **Modern UI**: [Noice.nvim](https://github.com/folke/noice.nvim) provides a floating command palette and modern notifications.
+- **Advanced Navigation**: 
+  - **Floating Neo-tree**: Center-screen file browsing with `<leader>e`.
+  - **Harpoon2**: Pin and jump between your most used files instantly.
+  - **Oil.nvim**: Edit your filesystem like a normal Neovim buffer.
+- **Git Power-user Tools**:
+  - **Diffview.nvim**: Specialized UI for project-wide diffs and merge conflicts.
+  - **LazyGit**: Integrated terminal for full Git management.
+- **Debugging & LSP**: 
+  - Full DAP support for **Go** (delve) and **Python** (debugpy).
+  - Pre-configured Language Servers (LSP) with automatic installation via Mason.
+- **Reliability**:
+  - **Persistence.nvim**: Automatic session saving and restoration.
+  - **Undotree**: Visual history of every change you've ever made to a file.
 
 ## Keymaps
 
 The leader key is set to `<Space>`.
 
-### Files & Navigation
+### Navigation & UI
 - `<leader>e`: **Neo-tree** (Floating File Explorer).
 - `-`: **Oil.nvim** (Edit directory as a buffer).
-- `<leader>sf`: [S]earch [F]iles.
-- `<leader>sg`: [S]earch by [G]rep.
-- `<leader>lg`: **LazyGit** integration.
+- `<C-\>`: **Toggle Terminal** (Floating).
+- `<leader>u`: **Undotree** (Undo history visualization).
+- `<leader>qs/ql`: **Restore Session** (Current/Last).
 
 ### Harpoon (Pinned Files)
 - `<leader>a`: **Add** current file to Harpoon.
-- `<C-e>`: **Toggle** Harpoon menu.
-- `<C-h>`: Select file 1.
-- `<C-t>`: Select file 2.
-- `<C-n>`: Select file 3.
-- `<C-s>`: Select file 4.
+- `<C-e>`: **Toggle** Harpoon menu (edit lines to remove/reorder).
+- `<C-h> / <C-t> / <C-n> / <C-s>`: Jump to files 1, 2, 3, or 4.
 
-### Diagnostics & UI (Trouble & Noice)
-- `<leader>xx`: **Trouble** Diagnostics (Project-wide).
-- `<leader>xX`: **Trouble** Diagnostics (Current File).
-- `<leader>cs`: **Trouble** Symbols (Current File structure).
-- `<leader>u`: **Undotree** (Visualize undo history).
-- `<C-\>`: **Toggle Terminal** (Floating).
+### Git & Diffing
+- `<leader>dv`: **Diffview Open** (Project-wide diff).
+- `<leader>dh`: **File History** (Timeline of changes for current file).
+- `<leader>dc`: **Diffview Close**.
+- `<leader>lg`: **LazyGit**.
 
-### LSP & Refactoring
+### Diagnostics (Trouble)
+- `<leader>xx`: **Project Diagnostics** (Beautifully grouped list).
+- `<leader>xX`: **Buffer Diagnostics** (Current file only).
+- `<leader>cs`: **Symbols View** (Browse functions/classes in current file).
+
+### Debugging (DAP)
+- `<F5>`: Start/Continue.
+- `<F1> / <F2> / <F3>`: Step Into / Over / Out.
+- `<leader>b`: Toggle Breakpoint.
+- `<F7>`: Toggle Debug UI.
+
+### LSP & Formatting
 - `grn` or `<leader>rn`: [R]e[n]ame symbol.
 - `gra` or `<leader>ca`: [C]ode [A]ction.
 - `grd` or `<leader>gd`: [G]oto [D]efinition.
 - `<leader>f`: [F]ormat buffer.
 
-### Session Management
-- `<leader>qs`: **Restore Session** for current directory.
-- `<leader>ql`: **Restore Last Session**.
-- `<leader>qd`: **Stop Saving** session (useful for temporary files).
-
-### Debugging (DAP)
-- `<F5>`: Start/Continue.
-- `<F1>` / `<F2>` / `<F3>`: Step Into / Over / Out.
-- `<leader>b`: Toggle Breakpoint.
-- `<F7>`: Toggle Debug UI.
-
 ## Language Support
 
-### LSPs (Auto-installed)
-- **Go**: `gopls`
-- **Python**: `pyright`
-- **Lua**: `lua_ls`
-- **Terraform**: `terraformls`
-
-### Debuggers
-- **Go**: `delve` (via `nvim-dap-go`)
-- **Python**: `debugpy` (via `nvim-dap-python`)
-
-### Linters & Formatters
-- **Lua**: `stylua`
-- **Python**: `isort`, `black`
-- **Markdown**: `markdownlint`
+- **Go**: LSP (`gopls`), Debugger (`delve`).
+- **Python**: LSP (`pyright`), Debugger (`debugpy`), Formatters (`isort`, `black`).
+- **Lua**: LSP (`lua_ls`), Formatter (`stylua`).
+- **Terraform**: LSP (`terraformls`), Linter (`tflint`).
+- **Markdown**: Linter (`markdownlint`), Live Rendering (`render-markdown`).
