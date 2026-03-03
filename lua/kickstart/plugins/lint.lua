@@ -9,6 +9,17 @@ return {
         markdown = { 'markdownlint' },
       }
 
+      vim.g.markdown_lint_enabled = true
+      vim.keymap.set('n', '<leader>tm', function()
+        vim.g.markdown_lint_enabled = not vim.g.markdown_lint_enabled
+        vim.notify('Markdown linting ' .. (vim.g.markdown_lint_enabled and 'enabled' or 'disabled'))
+        if vim.g.markdown_lint_enabled then
+          lint.try_lint()
+        else
+          vim.diagnostic.reset(nil, 0)
+        end
+      end, { desc = '[T]oggle [m]arkdown lint' })
+
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
       -- instead set linters_by_ft like this:
       -- lint.linters_by_ft = lint.linters_by_ft or {}
@@ -51,6 +62,9 @@ return {
           -- avoid superfluous noise, notably within the handy LSP pop-ups that
           -- describe the hovered symbol using Markdown.
           if vim.bo.modifiable then
+            if vim.bo.filetype == 'markdown' and not vim.g.markdown_lint_enabled then
+              return
+            end
             lint.try_lint()
           end
         end,
