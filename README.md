@@ -22,29 +22,18 @@ git clone https://github.com/yuriy-kovalchuk/nvim.git "${XDG_CONFIG_HOME:-$HOME/
 - **Debugging & LSP**: 
   - Full DAP support for **Go** (delve) and **Python** (debugpy).
   - Pre-configured Language Servers (LSP) with automatic installation via Mason.
+  - Powered by **blink.cmp** for ultra-fast autocompletion.
 - **Reliability**:
   - **Persistence.nvim**: Automatic session saving and restoration.
   - **Undotree**: Visual history of every change you've ever made to a file.
 
-### Treesitter (Main Branch)
+### Treesitter
 
-This configuration uses the **`main`** branch of `nvim-treesitter` (compatible with Neovim 0.11+). This branch is a complete rewrite and requires a different maintenance approach than the legacy `master` branch.
+This configuration uses `nvim-treesitter` for advanced syntax highlighting and code understanding.
 
-#### 1. System Requirements
-You must have the `tree-sitter` CLI installed on your system for parser management:
-- **macOS:** `brew install tree-sitter`
-- **Others:** `npm install -g tree-sitter-cli`
-
-#### 2. Initial Setup
-After a fresh install or if you change your parser list, run this command manually once:
-```vim
-:TSInstall bash c diff html lua luadoc markdown markdown_inline query vim vimdoc yaml json toml
-```
-
-#### 3. Maintenance
-- Use `:TSUpdate` to update all installed parsers.
-- Highlighting is managed by Neovim core via an autocommand in `init.lua`.
-- If you see "Parser could not be created" errors, ensure the parser is installed with `:TSInstall <lang>`.
+- **Auto-install**: Missing parsers are automatically installed when you open a file of a new type.
+- **Pre-installed**: Includes support for `bash`, `c`, `diff`, `html`, `lua`, `luadoc`, `markdown`, `vim`, `vimdoc`, and `go`.
+- **Maintenance**: Use `:TSUpdate` to update all installed parsers.
 
 ## Keymaps
 
@@ -55,40 +44,75 @@ The leader key is set to `<Space>`.
 - `-`: **Oil.nvim** (Edit directory as a buffer).
 - `<C-\>`: **Toggle Terminal** (Floating).
 - `<leader>u`: **Undotree** (Undo history visualization).
-- `<leader>qs/ql`: **Restore Session** (Current/Last).
+- `<leader>qs / ql / qd`: **Session Management** (Restore current / last / stop saving).
+- `<C-h/j/k/l>`: Move focus between windows.
+
+### Fuzzy Finder (Telescope)
+- `<leader>sf`: **Search Files**.
+- `<leader>sg`: **Search by Grep**.
+- `<leader>sw`: **Search current Word**.
+- `<leader>sd`: **Search Diagnostics**.
+- `<leader>sk`: **Search Keymaps**.
+- `<leader>sh`: **Search Help**.
+- `<leader>sr`: **Search Resume** (Last search).
+- `<leader>s.`: **Search Recent Files**.
+- `<leader><leader>`: **Find existing buffers**.
+- `<leader>/`: **Fuzzily search in current buffer**.
+- `<leader>sn`: **Search Neovim configuration files**.
 
 ### Harpoon (Pinned Files)
 - `<leader>a`: **Add** current file to Harpoon.
-- `<C-e>`: **Toggle** Harpoon menu (edit lines to remove/reorder).
+- `<C-e>`: **Toggle** Harpoon menu.
 - `<leader>1 / 2 / 3 / 4`: Jump to files 1, 2, 3, or 4.
 
 ### Git & Diffing
-- `<leader>dv`: **Diffview Open** (Project-wide diff).
-- `<leader>dh`: **File History** (Timeline of changes for current file).
-- `<leader>dc`: **Diffview Close**.
-- `<leader>lg`: **LazyGit**.
-
-### Diagnostics (Trouble)
-- `<leader>xx`: **Project Diagnostics** (Beautifully grouped list).
-- `<leader>xX`: **Buffer Diagnostics** (Current file only).
-- `<leader>cs`: **Symbols View** (Browse functions/classes in current file).
-
-### Debugging (DAP)
-- `<F5>`: Start/Continue.
-- `<F1> / <F2> / <F3>`: Step Into / Over / Out.
-- `<leader>b`: Toggle Breakpoint.
-- `<F7>`: Toggle Debug UI.
+- `<leader>lg`: **LazyGit** (Full TUI).
+- `<leader>dv / dh / dc`: **Diffview** (Open / File History / Close).
+- `]c / [c`: Jump to **next/previous change**.
+- `<leader>hs / hr`: **Stage / Reset** hunk.
+- `<leader>hp`: **Preview** hunk.
+- `<leader>hb`: **Blame** line.
+- `<leader>tb`: **Toggle** current line blame.
 
 ### LSP & Formatting
-- `grn` or `<leader>rn`: [R]e[n]ame symbol.
-- `gra` or `<leader>ca`: [C]ode [A]ction.
-- `grd` or `<leader>gd`: [G]oto [D]efinition.
-- `<leader>f`: [F]ormat buffer.
+- `grn` or `<leader>rn`: **Rename** symbol.
+- `gra` or `<leader>ca`: **Code Action**.
+- `grd` or `<leader>gd`: **Goto Definition**.
+- `grr` or `<leader>gr`: **Goto References**.
+- `gri` or `<leader>gi`: **Goto Implementation**.
+- `gO` or `<leader>ds`: **Document Symbols**.
+- `<leader>f`: **Format buffer** (via conform.nvim).
 
-## Language Support
+### Debugging (DAP)
+- `<F5>`: **Start / Continue**.
+- `<F1> / <F2> / <F3>`: **Step Into / Over / Out**.
+- `<leader>b / B`: **Toggle Breakpoint** / Set conditional breakpoint.
+- `<F7>`: **Toggle Debug UI**.
 
+### Markdown Tools
+- `<leader>mp`: **Toggle Preview** (Live rendering).
+- `<leader>tm`: **Toggle Markdown Lint**.
+
+## Plugins, Formatters & Linters
+
+### Core Plugins
+- **lazy.nvim**: Plugin manager.
+- **nvim-lspconfig**: LSP configuration.
+- **mason.nvim**: External tool manager (LSP, DAP, Formatters, Linters).
+- **blink.cmp**: Modern autocompletion engine.
+- **nvim-treesitter**: Syntax highlighting.
+- **telescope.nvim**: Fuzzy finder.
+- **which-key.nvim**: Keybinding documentation.
+
+### Formatters (via conform.nvim)
+- **stylua**: Lua formatting.
+- **gopls**: Go formatting (fallback).
+
+### Linters (via nvim-lint)
+- **markdownlint**: Markdown linting.
+
+### Language Support
 - **Go**: LSP (`gopls`), Debugger (`delve`).
-- **Python**: LSP (`pyright`), Debugger (`debugpy`), Formatters (`isort`, `black`).
-- **Lua**: LSP (`lua_ls`), Formatter (`stylua`).
+- **Python**: LSP (`pyright`), Debugger (`debugpy`).
+- **Lua**: LSP (`lua_ls`).
 - **Terraform**: LSP (`terraformls`), Linter (`tflint`).
-- **Markdown**: Linter (`markdownlint`), Live Rendering (`render-markdown`).
