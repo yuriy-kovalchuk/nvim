@@ -26,6 +26,26 @@ git clone https://github.com/yuriy-kovalchuk/nvim.git "${XDG_CONFIG_HOME:-$HOME/
   - **Persistence.nvim**: Automatic session saving and restoration.
   - **Undotree**: Visual history of every change you've ever made to a file.
 
+### Treesitter (Main Branch)
+
+This configuration uses the **`main`** branch of `nvim-treesitter` (compatible with Neovim 0.11+). This branch is a complete rewrite and requires a different maintenance approach than the legacy `master` branch.
+
+#### 1. System Requirements
+You must have the `tree-sitter` CLI installed on your system for parser management:
+- **macOS:** `brew install tree-sitter`
+- **Others:** `npm install -g tree-sitter-cli`
+
+#### 2. Initial Setup
+After a fresh install or if you change your parser list, run this command manually once:
+```vim
+:TSInstall bash c diff html lua luadoc markdown markdown_inline query vim vimdoc yaml json toml
+```
+
+#### 3. Maintenance
+- Use `:TSUpdate` to update all installed parsers.
+- Highlighting is managed by Neovim core via an autocommand in `init.lua`.
+- If you see "Parser could not be created" errors, ensure the parser is installed with `:TSInstall <lang>`.
+
 ## Keymaps
 
 The leader key is set to `<Space>`.
@@ -40,7 +60,7 @@ The leader key is set to `<Space>`.
 ### Harpoon (Pinned Files)
 - `<leader>a`: **Add** current file to Harpoon.
 - `<C-e>`: **Toggle** Harpoon menu (edit lines to remove/reorder).
-- `<C-h> / <C-t> / <C-n> / <C-s>`: Jump to files 1, 2, 3, or 4.
+- `<leader>1 / 2 / 3 / 4`: Jump to files 1, 2, 3, or 4.
 
 ### Git & Diffing
 - `<leader>dv`: **Diffview Open** (Project-wide diff).
