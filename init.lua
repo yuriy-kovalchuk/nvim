@@ -897,34 +897,19 @@ require('lazy').setup({
     lazy = false,
     build = ':TSUpdate',
     config = function()
-      -- Enable treesitter highlighting for all supported buffers
-      vim.api.nvim_create_autocmd('FileType', {
-        callback = function()
-          local bufnr = vim.api.nvim_get_current_buf()
-          local ft = vim.bo[bufnr].filetype
-          if ft == '' or ft == 'neo-tree' then
-            return
-          end
-
-          local lang = vim.treesitter.language.get_lang(ft) or ft
-          if lang then
-            pcall(vim.treesitter.start, bufnr, lang)
-          end
-        end,
-      })
-
-      -- Optional: Enable folding
-      -- vim.wo.foldmethod = 'expr'
-      -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-
-      -- Optional: Enable indentation
-      -- vim.api.nvim_create_autocmd('FileType', {
-      --   callback = function()
-      --     if vim.treesitter.language.get_lang(vim.bo.filetype) then
-      --       vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-      --     end
-      --   end,
-      -- })
+      require('nvim-treesitter.config').setup {
+        -- Autoinstall languages that are not installed
+        auto_install = true,
+        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'go' },
+        highlight = {
+          enable = true,
+          -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+          --  If you are experiencing weird indenting issues, add the language to
+          --  the list of additional_vim_regex_highlighting and see if that helps.
+          additional_vim_regex_highlighting = { 'ruby' },
+        },
+        indent = { enable = true, disable = { 'ruby' } },
+      }
     end,
   },
 
