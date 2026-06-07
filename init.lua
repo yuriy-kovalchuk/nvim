@@ -623,6 +623,7 @@ require('lazy').setup({
       local servers = {
         terraformls = {},
         tflint = {},
+        yamlls = {},
         clangd = {},
         gopls = {},
         pyright = {},
@@ -847,7 +848,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'jb'
+      vim.cmd.colorscheme 'rose-pine'
     end,
   },
 
@@ -900,7 +901,7 @@ require('lazy').setup({
       require('nvim-treesitter.config').setup {
         -- Autoinstall languages that are not installed
         auto_install = true,
-        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'go' },
+        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'go', 'yaml' },
         highlight = {
           enable = true,
           -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
